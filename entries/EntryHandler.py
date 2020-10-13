@@ -52,6 +52,19 @@ class EntryHandler(BasicHandler):
 
         return entry
 
+    def _create(self, cursor, entry):
+        cursor.execute("""
+        INSERT INTO Entries
+            ( date, entry, moodId )
+        VALUES
+            ( ?, ?, ? )
+        """, ( entry['date'], entry['entry'], entry['moodId'] ))
+
+        id = cursor.lastrowid
+        entry['id'] = id
+
+        return entry
+
     def _delete(self, cursor, id):
         cursor.execute("""
         DELETE 
