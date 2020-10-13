@@ -65,6 +65,19 @@ class EntryHandler(BasicHandler):
 
         return entry
 
+    def _update(self, cursor, id, entry):
+        cursor.execute("""
+        UPDATE Entries
+        SET
+            date = ?,
+            entry = ?,
+            moodId = ?
+        WHERE id = ?
+        """, ( entry['date'], entry['entry'], entry['moodId'], id ))
+
+        rows_affected = cursor.rowcount
+        return rows_affected != 0
+
     def _delete(self, cursor, id):
         cursor.execute("""
         DELETE 
