@@ -3,6 +3,7 @@ import json
 import urllib
 
 from entries import EntryHandler
+from concepts import ConceptHandler
 
 class HandleRequests(BaseHTTPRequestHandler):
     def _set_headers(self, status):
@@ -51,6 +52,8 @@ class HandleRequests(BaseHTTPRequestHandler):
     def get_resource_handler(self, resource):
         if resource == 'entries':
             return EntryHandler()
+        elif resource == 'concepts':
+            return ConceptHandler()
         
         raise Exception('Unrecognized resource')
 
