@@ -16,6 +16,10 @@ class BasicHandler():
         result = self.__exec_query(lambda cursor: self._get_by_id(cursor, id))
         return json.dumps(result)
 
+    def create(self, obj):
+        result = self.__exec_query(lambda cursor: self._create(cursor, obj))
+        return json.dumps(result)
+
     def delete(self, id):
         self.__exec_query(lambda cursor: self._delete(cursor, id))
 
@@ -23,4 +27,10 @@ class BasicHandler():
         pass
 
     def _get_by_id(self, cursor, id):
+        pass
+
+    def _create(self, cursor, obj):
+        pass
+
+    def _delete(self, cursor, id):
         pass
