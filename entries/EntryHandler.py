@@ -1,20 +1,33 @@
 from helpers import BasicHandler
-from models import Entry
+from models import Entry, Mood
 
 class EntryHandler(BasicHandler):
+    def __build_expanded_entry_from_row(self, row):
+        entry = Entry(row['id'], row['date'], row['entry'], row['moodId'])
+
+        mood = Mood(row['moodId'], row['mood_value'], row['mood_label'])
+
+        entry.mood = mood.__dict__
+
+        return entry.__dict__
+
     def _get_all(self, cursor):
         cursor.execute("""
         SELECT
             e.id,
             e.date,
             e.entry,
-            e.moodId
+            e.moodId,
+            m.value mood_value,
+            m.label mood_label
         FROM Entries e
+        JOIN Moods m
+            ON m.id = e.moodId
         """)
 
         results = cursor.fetchall()
 
-        entries = [ (Entry(**entry)).__dict__ for entry in results ]
+        entries = [ self.__build_expanded_entry_from_row(row) for row in results ]
 
         return entries
 
@@ -31,7 +44,7 @@ class EntryHandler(BasicHandler):
 
         result = cursor.fetchone()
 
-        entry = Entry(**result).__dict__
+        entry = self.__build_expanded_entry_from_row(result)
 
         return entry
 
