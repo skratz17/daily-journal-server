@@ -2,7 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 import urllib
 
-from entries import get_all_entries
+from entries import EntryHandler
 
 class HandleRequests(BaseHTTPRequestHandler):
     def _set_headers(self, status):
@@ -11,7 +11,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
 
-    def __get_post_body(self):
+    def get_post_body(self):
         content_len = int(self.headers.get('content-length', 0))
         post_body = self.rfile.read(content_len)
 
@@ -48,6 +48,12 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         return (resource, id) 
 
+    def get_resource_handler(self, resource):
+        if resource == 'entries':
+            return EntryHandler()
+        
+        raise Exception('Unrecognized resource')
+
     def do_GET(self):
         self._set_headers(200)
         response = {}
@@ -57,9 +63,10 @@ class HandleRequests(BaseHTTPRequestHandler):
         if len(url_parts) == 2:
             resource, id = url_parts
 
-            if resource == 'entries':
-                if id is None:
-                    response = f"{get_all_entries()}"
+            resource_handler = self.get_resource_handler(resource)
+
+            if id is None:
+                response = resource_handler.get_all()
 
         self.wfile.write(response.encode())
 

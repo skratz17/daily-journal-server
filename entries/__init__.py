@@ -1,1 +1,1 @@
-from .request import get_all_entries
+from .EntryHandler import EntryHandler
