@@ -31,6 +31,19 @@ class ConceptHandler(BasicHandler):
         
         return concept
 
+    def _create(self, cursor, concept):
+        cursor.execute("""
+        INSERT INTO Concepts
+            ( name )
+        VALUES
+            ( ? )
+        """, ( concept['name'], ))
+
+        id = cursor.lastrowid
+        concept['id'] = id
+
+        return concept
+
     def _delete(self, cursor, id):
         cursor.execute("""
         DELETE 

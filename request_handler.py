@@ -83,6 +83,18 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         self.wfile.write(response.encode())
 
+    def do_POST(self):
+        self._set_headers(201) # 201 - Created
+
+        post_body = self.get_post_body()
+
+        (resource, id) = self.parse_url(self.path)
+
+        resource_handler = self.get_resource_handler(resource)
+        new_resource = resource_handler.create(post_body)
+
+        self.wfile.write(f"{new_resource}".encode())
+
     def do_DELETE(self):
         self._set_headers(204) # 204 - No Content
 
