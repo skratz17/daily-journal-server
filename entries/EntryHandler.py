@@ -80,7 +80,7 @@ class EntryHandler(BasicHandler):
         if(rows_affected == 0):
             return False
 
-        return entry
+        return self._get_by_id(cursor, id)
 
     def _delete(self, cursor, id):
         cursor.execute("""
