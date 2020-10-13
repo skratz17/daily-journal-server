@@ -4,6 +4,7 @@ import urllib
 
 from entries import EntryHandler
 from concepts import ConceptHandler
+from moods import MoodHandler
 
 class HandleRequests(BaseHTTPRequestHandler):
     def _set_headers(self, status):
@@ -54,6 +55,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             return EntryHandler()
         elif resource == 'concepts':
             return ConceptHandler()
+        elif resource == 'moods':
+            return MoodHandler()
         
         raise Exception('Unrecognized resource')
 
