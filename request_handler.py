@@ -101,14 +101,15 @@ class HandleRequests(BaseHTTPRequestHandler):
         (resource, id) = self.parse_url(self.path)
 
         resource_handler = self.get_resource_handler(resource)
-        success = resource_handler.update(id, post_body)
+        result = resource_handler.update(id, post_body)
 
-        if(success == False):
+        if(result == False):
             self._set_headers(404)
+            self.wfile.write("".encode())
         else:
             self._set_headers(204)
+            self.wfile.write(f"{result}".encode())
 
-        self.wfile.write("".encode())
 
     def do_DELETE(self):
         self._set_headers(204) # 204 - No Content

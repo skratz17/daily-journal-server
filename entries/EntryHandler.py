@@ -76,7 +76,11 @@ class EntryHandler(BasicHandler):
         """, ( entry['date'], entry['entry'], entry['moodId'], id ))
 
         rows_affected = cursor.rowcount
-        return rows_affected != 0
+
+        if(rows_affected == 0):
+            return False
+
+        return entry
 
     def _delete(self, cursor, id):
         cursor.execute("""

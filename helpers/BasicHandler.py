@@ -22,7 +22,11 @@ class BasicHandler():
 
     def update(self, id, obj):
         result = self.__exec_query(lambda cursor: self._update(cursor, id, obj))
-        return result       
+
+        if result == False:
+            return False
+
+        return json.dumps(result)
 
     def delete(self, id):
         self.__exec_query(lambda cursor: self._delete(cursor, id))
