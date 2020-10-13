@@ -20,6 +20,10 @@ class BasicHandler():
         result = self.__exec_query(lambda cursor: self._create(cursor, obj))
         return json.dumps(result)
 
+    def update(self, id, obj):
+        result = self.__exec_query(lambda cursor: self._update(cursor, id, obj))
+        return result       
+
     def delete(self, id):
         self.__exec_query(lambda cursor: self._delete(cursor, id))
 
@@ -30,6 +34,9 @@ class BasicHandler():
         pass
 
     def _create(self, cursor, obj):
+        pass
+
+    def _update(self, cursor, id, obj):
         pass
 
     def _delete(self, cursor, id):
