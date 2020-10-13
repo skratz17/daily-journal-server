@@ -37,8 +37,12 @@ class EntryHandler(BasicHandler):
             e.id,
             e.date,
             e.entry,
-            e.moodId
+            e.moodId,
+            m.value mood_value,
+            m.label mood_label
         FROM Entries e
+        JOIN Moods m
+            ON m.id = e.moodId
         WHERE e.id = ?
         """, ( id, ))
 
