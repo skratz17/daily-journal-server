@@ -95,6 +95,21 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         self.wfile.write(f"{new_resource}".encode())
 
+    def do_PUT(self):
+        post_body = self.get_post_body()
+
+        (resource, id) = self.parse_url(self.path)
+
+        resource_handler = self.get_resource_handler(resource)
+        success = resource_handler.update(id, post_body)
+
+        if(success == False):
+            self._set_headers(404)
+        else:
+            self._set_headers(204)
+
+        self.wfile.write("".encode())
+
     def do_DELETE(self):
         self._set_headers(204) # 204 - No Content
 
