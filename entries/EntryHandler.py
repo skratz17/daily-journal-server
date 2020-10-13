@@ -34,3 +34,10 @@ class EntryHandler(BasicHandler):
         entry = Entry(**result).__dict__
 
         return entry
+
+    def _delete(self, cursor, id):
+        cursor.execute("""
+        DELETE 
+        FROM Entries
+        WHERE id = ?
+        """, ( id, ))

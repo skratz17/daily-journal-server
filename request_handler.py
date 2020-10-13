@@ -72,6 +72,16 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         self.wfile.write(response.encode())
 
+    def do_DELETE(self):
+        self._set_headers(204) # 204 - No Content
+
+        (resource, id) = self.parse_url(self.path)
+
+        resource_handler = self.get_resource_handler(resource)
+        resource_handler.delete(id)
+
+        self.wfile.write("".encode())
+
 def main():
     host = ''
     port = 8088

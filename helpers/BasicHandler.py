@@ -16,6 +16,9 @@ class BasicHandler():
         result = self.__exec_query(lambda cursor: self._get_by_id(cursor, id))
         return json.dumps(result)
 
+    def delete(self, id):
+        self.__exec_query(lambda cursor: self._delete(cursor, id))
+
     def _get_all(self, cursor):
         pass
 
