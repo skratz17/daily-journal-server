@@ -4,3 +4,4 @@ class Entry():
         self.date = date
         self.entry = entry
         self.moodId = moodId
+        self.mood = None
