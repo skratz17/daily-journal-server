@@ -88,3 +88,10 @@ class EntryHandler(BasicHandler):
         FROM Entries
         WHERE id = ?
         """, ( id, ))
+
+        # cascade delete all EntryConcepts that were associated with this entry
+        cursor.execute("""
+        DELETE
+        FROM EntryConcepts
+        WHERE entryId= ?
+        """, ( id, ))
