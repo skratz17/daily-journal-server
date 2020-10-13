@@ -12,5 +12,12 @@ class BasicHandler():
         result = self.__exec_query(lambda cursor: self._get_all(cursor))
         return json.dumps(result)
 
-    def _get_all(self):
+    def get_by_id(self, id):
+        result = self.__exec_query(lambda cursor: self._get_by_id(cursor, id))
+        return json.dumps(result)
+
+    def _get_all(self, cursor):
+        pass
+
+    def _get_by_id(self, cursor, id):
         pass

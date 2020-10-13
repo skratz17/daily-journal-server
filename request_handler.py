@@ -67,6 +67,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
             if id is None:
                 response = resource_handler.get_all()
+            else:
+                response = resource_handler.get_by_id(id)
 
         self.wfile.write(response.encode())
 

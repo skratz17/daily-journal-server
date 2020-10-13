@@ -17,3 +17,20 @@ class EntryHandler(BasicHandler):
         entries = [ (Entry(**entry)).__dict__ for entry in results ]
 
         return entries
+
+    def _get_by_id(self, cursor, id):
+        cursor.execute("""
+        SELECT
+            e.id,
+            e.date,
+            e.entry,
+            e.moodId
+        FROM Entries e
+        WHERE e.id = ?
+        """, ( id, ))
+
+        result = cursor.fetchone()
+
+        entry = Entry(**result).__dict__
+
+        return entry
